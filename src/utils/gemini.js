@@ -4,11 +4,17 @@ export async function analyzeReview(reviewText) {
   const prompt = `
 You are a hospitality review analyst for an eco-homestay in Uttarakhand, India.
 Analyze the following guest review and return ONLY a valid JSON object with exactly these three fields:
-- "sentiment": one of "Positive", "Neutral", or "Negative"
-- "theme": one of "Food", "Host", "Cleanliness", "Location", "Value", "Experience"
-- "response": a professional one-line management response (max 20 words)
 
-Do not include any explanation, markdown, or extra text. Only return the JSON object.
+- "sentiment": MUST be exactly one of these three values: "Positive", "Neutral", "Negative"
+- "theme": MUST be exactly one of these six values: "Food", "Host", "Cleanliness", "Location", "Value", "Experience"
+- "response": a professional one-line management response between 10 and 20 words. This field must NEVER be empty.
+
+Rules:
+1. "theme" must ONLY be one of the six values listed above. Never use "Positive", "Negative", or "Neutral" as a theme.
+2. "response" must always be a complete sentence. Never return an empty string.
+3. If the review mentions overall satisfaction or general experience, use "Experience" as the theme.
+4. If the review mentions pricing or value for money, use "Value" as the theme.
+5. Return ONLY the JSON object. No markdown, no explanation, no extra text.
 
 Review: "${reviewText}"
 `
