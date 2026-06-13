@@ -76,7 +76,18 @@ function ResultsTable({ results }) {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-gray-600 italic leading-relaxed">
-                  "{r.response}"
+                <div className="flex items-start gap-2">
+                    <span>"{r.response}"</span>
+                    <button
+                    onClick={() => {
+                        navigator.clipboard.writeText(r.response)
+                    }}
+                    className="shrink-0 text-gray-400 hover:text-orange-500 transition-colors mt-0.5"
+                    title="Copy response"
+                    >
+                    📋
+                    </button>
+                </div>
                 </td>
               </tr>
             ))}

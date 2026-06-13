@@ -1,5 +1,7 @@
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
 export async function analyzeReview(reviewText) {
   const prompt = `
 You are a hospitality review analyst for an eco-homestay in Uttarakhand, India.
@@ -25,7 +27,7 @@ Review: "${reviewText}"
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${API_KEY}`,
       'HTTP-Referer': 'http://localhost:5173',
-      'X-Title': 'Guest Review Dashboard'
+      'X-Title': 'GuestLens'
     },
     body: JSON.stringify({
       model: 'google/gemma-4-31b-it:free',
@@ -34,7 +36,6 @@ Review: "${reviewText}"
   })
 
   const data = await res.json()
-  console.log('OpenRouter response:', JSON.stringify(data))
 
   if (!data.choices || data.choices.length === 0) {
     throw new Error(JSON.stringify(data))
@@ -43,4 +44,17 @@ Review: "${reviewText}"
   const raw = data.choices[0].message.content
   const cleaned = raw.replace(/```json|```/g, '').trim()
   return JSON.parse(cleaned)
+}
+
+export async function analyzeReviewsSequentially(reviews, onProgress) {
+  const results = []
+  for (let i = 0; i < reviews.length; i++) {
+    const result = await analyzeReview(reviews[i])
+    results.push({ review: reviews[i], ...result })
+    onProgress(i + 1, reviews.length)
+    if (i < reviews.length - 1) {
+      await sleep(1500)
+    }
+  }
+  return results
 }
