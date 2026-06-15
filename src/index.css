@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+body {
+  background-color: #f5f0e8;
+  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
+}
+
+.font-serif {
+  font-family: 'Playfair Display', serif;
+}
