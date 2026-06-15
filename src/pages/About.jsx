@@ -60,7 +60,7 @@ function About() {
         <div className="bg-white rounded-2xl p-8 border" style={{ borderColor: '#e8e0d4' }}>
           <h3 className="font-serif text-xl font-bold mb-3" style={{ color: '#1a1a1a' }}>Under the hood</h3>
           <p className="text-sm leading-relaxed mb-6" style={{ color: '#6a5a4a' }}>
-            React 18 + Vite, Tailwind CSS, Recharts for analytics, PapaParse for CSV export, and Gemini AI via OpenRouter powering the language model behind every classification and suggested reply.
+          React 18 + Vite, Tailwind CSS, React Router DOM for client-side routing, Recharts for analytics, PapaParse for CSV export, and Gemini AI via OpenRouter powering the language model behind every classification and suggested reply.
           </p>
           <div className="flex gap-3">
             <button
