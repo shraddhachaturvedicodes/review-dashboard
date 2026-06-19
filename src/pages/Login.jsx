@@ -1,8 +1,12 @@
+import { useState } from 'react'
 import Footer from '../components/Footer'
 import { useNavigate } from 'react-router-dom'
+import { Button, Input } from '../components/ui'
 
 function Login() {
   const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#f7f4ef' }}>
@@ -17,30 +21,23 @@ function Login() {
           </div>
 
           <div className="space-y-4">
-            <div>
-              <label className="text-xs font-semibold uppercase tracking-wider block mb-1.5" style={{ color: '#8a7a6a' }}>Email</label>
-              <input
-                type="email"
-                placeholder="you@example.com"
-                className="w-full rounded-xl px-4 py-3 text-sm border outline-none transition-all"
-                style={{ borderColor: '#e8e0d4', backgroundColor: '#fdf8f4' }}
-              />
-            </div>
-            <div>
-              <label className="text-xs font-semibold uppercase tracking-wider block mb-1.5" style={{ color: '#8a7a6a' }}>Password</label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                className="w-full rounded-xl px-4 py-3 text-sm border outline-none transition-all"
-                style={{ borderColor: '#e8e0d4', backgroundColor: '#fdf8f4' }}
-              />
-            </div>
-            <button
-              className="w-full py-3 rounded-full text-sm font-semibold transition-all hover:opacity-90"
-              style={{ backgroundColor: '#e8682a', color: 'white' }}
-            >
+            <Input
+              label="Email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              label="Password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button variant="primary" size="lg">
               Sign in
-            </button>
+            </Button>
           </div>
 
           <p className="text-center text-xs mt-6" style={{ color: '#8a7a6a' }}>

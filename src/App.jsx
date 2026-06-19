@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Login from './pages/Login'
 import DashboardPage from './pages/DashboardPage'
+import Showcase from './pages/Showcase'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/showcase" element={<Showcase />} />
       </Routes>
     </BrowserRouter>
   )

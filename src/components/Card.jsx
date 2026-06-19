@@ -1,7 +1,7 @@
 function Card({ icon, tag, title, description }) {
   return (
     <div
-      className="bg-white rounded-2xl p-6 border border-stone-200 hover:shadow-md transition-all hover:border-orange-200"
+      className="bg-white dark:bg-stone-800 rounded-2xl p-6 border border-stone-200 dark:border-stone-700 hover:shadow-md transition-all hover:border-orange-200"
     >
       <div className="flex items-start justify-between mb-4">
         <div
@@ -19,8 +19,8 @@ function Card({ icon, tag, title, description }) {
           </span>
         )}
       </div>
-      <h3 className="font-semibold text-base text-gray-800 mb-2">{title}</h3>
-      <p className="text-sm leading-relaxed text-gray-500">{description}</p>
+      <h3 className="font-semibold text-base text-gray-800 dark:text-white mb-2">{title}</h3>
+      <p className="text-sm leading-relaxed text-gray-500 dark:text-stone-400">{description}</p>
     </div>
   )
 }

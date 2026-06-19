@@ -1,4 +1,15 @@
+import { useState } from 'react'
+import { Button, Toast, Modal } from './ui'
+
 function ResultsTable({ results }) {
+  const [toast, setToast] = useState({ visible: false, message: '', type: 'success' })
+  const [selectedReview, setSelectedReview] = useState(null)
+
+  const showToast = (message, type = 'success') => {
+    setToast({ visible: false, message: '', type })
+    setTimeout(() => setToast({ visible: true, message, type }), 50)
+  }
+
   const sentimentStyles = {
     Positive: 'bg-green-100 text-green-700 border border-green-200',
     Neutral: 'bg-yellow-100 text-yellow-700 border border-yellow-200',
@@ -30,6 +41,12 @@ function ResultsTable({ results }) {
     a.download = 'guestlens-analysis.csv'
     a.click()
     URL.revokeObjectURL(url)
+    showToast('CSV exported successfully!', 'success')
+  }
+
+  const handleCopy = (response) => {
+    navigator.clipboard.writeText(response)
+    showToast('Response copied to clipboard!', 'info')
   }
 
   return (
@@ -41,12 +58,9 @@ function ResultsTable({ results }) {
             {results.length} review{results.length !== 1 ? 's' : ''} analyzed
           </span>
         </h2>
-        <button
-          onClick={handleExport}
-          className="text-sm bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl font-medium transition-all"
-        >
+        <Button variant="primary" size="sm" onClick={handleExport}>
           ⬇️ Export CSV
-        </button>
+        </Button>
       </div>
 
       <div className="overflow-x-auto">
@@ -63,7 +77,12 @@ function ResultsTable({ results }) {
             {results.map((r, i) => (
               <tr key={i} className="hover:bg-gray-50 transition-colors">
                 <td className="px-6 py-4 text-gray-700 leading-relaxed">
-                  {r.review}
+                  <button
+                    onClick={() => setSelectedReview(r)}
+                    className="text-left hover:underline hover:text-orange-600 transition-colors"
+                  >
+                    {r.review.length > 60 ? r.review.slice(0, 60) + '...' : r.review}
+                  </button>
                 </td>
                 <td className="px-6 py-4">
                   <span className={`px-3 py-1 rounded-full text-xs font-semibold ${sentimentStyles[r.sentiment] || 'bg-gray-100 text-gray-600'}`}>
@@ -76,24 +95,58 @@ function ResultsTable({ results }) {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-gray-600 italic leading-relaxed">
-                <div className="flex items-start gap-2">
+                  <div className="flex items-start gap-2">
                     <span>"{r.response}"</span>
                     <button
-                    onClick={() => {
-                        navigator.clipboard.writeText(r.response)
-                    }}
-                    className="shrink-0 text-gray-400 hover:text-orange-500 transition-colors mt-0.5"
-                    title="Copy response"
+                      onClick={() => handleCopy(r.response)}
+                      className="shrink-0 text-gray-400 hover:text-orange-500 transition-colors mt-0.5"
+                      title="Copy response"
                     >
-                    📋
+                      📋
                     </button>
-                </div>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      <Modal
+        isOpen={!!selectedReview}
+        onClose={() => setSelectedReview(null)}
+        title="Full Review"
+      >
+        {selectedReview && (
+          <div className="space-y-4">
+            <p className="leading-relaxed">{selectedReview.review}</p>
+            <div className="flex gap-2">
+              <span className={`px-3 py-1 rounded-full text-xs font-semibold ${sentimentStyles[selectedReview.sentiment]}`}>
+                {selectedReview.sentiment}
+              </span>
+              <span className={`px-3 py-1 rounded-full text-xs font-medium ${themeStyles[selectedReview.theme]}`}>
+                {selectedReview.theme}
+              </span>
+            </div>
+            <div className="pt-2 border-t" style={{ borderColor: '#e8e0d4' }}>
+              <p className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: '#8a7a6a' }}>
+                Suggested Response
+              </p>
+              <p className="italic">"{selectedReview.response}"</p>
+            </div>
+            <Button variant="outline" size="sm" onClick={() => setSelectedReview(null)}>
+              Close
+            </Button>
+          </div>
+        )}
+      </Modal>
+
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.visible}
+        onDismiss={() => setToast({ ...toast, visible: false })}
+      />
     </div>
   )
 }

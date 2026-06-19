@@ -1,9 +1,9 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 body {
-  background-color: #f5f0e8;
   font-family: 'Inter', sans-serif;
-  color: #1a1a1a;
+  transition: background-color 0.2s ease;
 }
 
 .font-serif {

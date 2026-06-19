@@ -16,17 +16,17 @@ function Home() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#f7f4ef' }}>
+    <div className="min-h-screen flex flex-col bg-[#f7f4ef] dark:bg-stone-900">
       <Hero />
 
       {/* Features Section */}
       <section className="max-w-6xl mx-auto px-6 pb-20 w-full">
         <div className="flex items-end justify-between mb-10">
           <div>
-            <h2 className="text-2xl font-bold text-gray-800">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
               Everything your front desk needs.
             </h2>
-            <p className="text-sm mt-1 text-gray-500">
+            <p className="text-sm mt-1 text-gray-500 dark:text-stone-400">
               Six focused features that turn unread reviews into clear action items.
             </p>
           </div>
