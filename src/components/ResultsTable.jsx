@@ -11,18 +11,18 @@ function ResultsTable({ results }) {
   }
 
   const sentimentStyles = {
-    Positive: 'bg-green-100 text-green-700 border border-green-200',
-    Neutral: 'bg-yellow-100 text-yellow-700 border border-yellow-200',
-    Negative: 'bg-red-100 text-red-700 border border-red-200'
+    Positive: 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700',
+    Neutral: 'bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-700',
+    Negative: 'bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700'
   }
 
   const themeStyles = {
-    Food: 'bg-orange-50 text-orange-600',
-    Host: 'bg-blue-50 text-blue-600',
-    Cleanliness: 'bg-purple-50 text-purple-600',
-    Location: 'bg-teal-50 text-teal-600',
-    Value: 'bg-pink-50 text-pink-600',
-    Experience: 'bg-indigo-50 text-indigo-600'
+    Food: 'bg-orange-50 dark:bg-orange-950 text-orange-600 dark:text-orange-300',
+    Host: 'bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-300',
+    Cleanliness: 'bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-300',
+    Location: 'bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-300',
+    Value: 'bg-pink-50 dark:bg-pink-950 text-pink-600 dark:text-pink-300',
+    Experience: 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-300'
   }
 
   const handleExport = () => {
@@ -50,11 +50,11 @@ function ResultsTable({ results }) {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
-      <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-700">
+    <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-gray-200 dark:border-stone-700 overflow-hidden mb-6">
+      <div className="px-6 py-4 border-b border-gray-100 dark:border-stone-700 flex items-center justify-between">
+        <h2 className="text-lg font-semibold text-gray-700 dark:text-stone-200">
           📊 Analysis Results
-          <span className="ml-2 text-sm font-normal text-gray-400">
+          <span className="ml-2 text-sm font-normal text-gray-400 dark:text-stone-500">
             {results.length} review{results.length !== 1 ? 's' : ''} analyzed
           </span>
         </h2>
@@ -65,7 +65,7 @@ function ResultsTable({ results }) {
 
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-500 uppercase text-xs tracking-wide">
+          <thead className="bg-gray-50 dark:bg-stone-900 text-gray-500 dark:text-stone-400 uppercase text-xs tracking-wide">
             <tr>
               <th className="px-6 py-3 text-left w-2/5">Review</th>
               <th className="px-6 py-3 text-left">Sentiment</th>
@@ -73,10 +73,10 @@ function ResultsTable({ results }) {
               <th className="px-6 py-3 text-left">Suggested Response</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-gray-100 dark:divide-stone-700">
             {results.map((r, i) => (
-              <tr key={i} className="hover:bg-gray-50 transition-colors">
-                <td className="px-6 py-4 text-gray-700 leading-relaxed">
+              <tr key={i} className="hover:bg-gray-50 dark:hover:bg-stone-700 transition-colors">
+                <td className="px-6 py-4 text-gray-700 dark:text-stone-300 leading-relaxed">
                   <button
                     onClick={() => setSelectedReview(r)}
                     className="text-left hover:underline hover:text-orange-600 transition-colors"
@@ -85,21 +85,21 @@ function ResultsTable({ results }) {
                   </button>
                 </td>
                 <td className="px-6 py-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${sentimentStyles[r.sentiment] || 'bg-gray-100 text-gray-600'}`}>
+                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${sentimentStyles[r.sentiment] || 'bg-gray-100 dark:bg-stone-700 text-gray-600 dark:text-stone-300'}`}>
                     {r.sentiment}
                   </span>
                 </td>
                 <td className="px-6 py-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${themeStyles[r.theme] || 'bg-gray-100 text-gray-600'}`}>
+                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${themeStyles[r.theme] || 'bg-gray-100 dark:bg-stone-700 text-gray-600 dark:text-stone-300'}`}>
                     {r.theme}
                   </span>
                 </td>
-                <td className="px-6 py-4 text-gray-600 italic leading-relaxed">
+                <td className="px-6 py-4 text-gray-600 dark:text-stone-400 italic leading-relaxed">
                   <div className="flex items-start gap-2">
                     <span>"{r.response}"</span>
                     <button
                       onClick={() => handleCopy(r.response)}
-                      className="shrink-0 text-gray-400 hover:text-orange-500 transition-colors mt-0.5"
+                      className="shrink-0 text-gray-400 dark:text-stone-500 hover:text-orange-500 transition-colors mt-0.5"
                       title="Copy response"
                     >
                       📋

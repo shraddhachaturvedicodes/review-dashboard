@@ -31,31 +31,31 @@ function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#f7f4ef] dark:bg-stone-900">
       <main className="flex-1 max-w-5xl mx-auto px-6 py-12 w-full">
         <div className="mb-2">
           <span className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#e8682a' }}>
             Dashboard
           </span>
         </div>
-        <h1 className="font-serif text-4xl font-bold mb-2" style={{ color: '#1a1a1a' }}>
+        <h1 className="font-serif text-4xl font-bold mb-2 text-[#1a1a1a] dark:text-white">
           Read your guests, instantly.
         </h1>
-        <p className="text-sm mb-10" style={{ color: '#8a7a6a' }}>
+        <p className="text-sm mb-10 text-[#8a7a6a] dark:text-stone-400">
           Paste a single review or many at once. GuestLens classifies sentiment, tags themes and drafts a reply for every one.
         </p>
 
-        <div className="bg-white rounded-2xl border p-6 mb-4" style={{ borderColor: '#e8e0d4' }}>
+        <div className="bg-white dark:bg-stone-800 rounded-2xl border border-[#e8e0d4] dark:border-stone-700 p-6 mb-4">
           <ReviewInput onAnalyze={handleAnalyze} isLoading={isLoading} />
         </div>
 
         {isLoading && progress.total > 0 && (
-          <div className="bg-white rounded-2xl border px-6 py-4 mb-4" style={{ borderColor: '#e8e0d4' }}>
-            <div className="flex justify-between text-sm mb-2" style={{ color: '#8a7a6a' }}>
+          <div className="bg-white dark:bg-stone-800 rounded-2xl border border-[#e8e0d4] dark:border-stone-700 px-6 py-4 mb-4">
+            <div className="flex justify-between text-sm mb-2 text-[#8a7a6a] dark:text-stone-400">
               <span>Analyzing reviews...</span>
-              <span style={{ color: '#1a1a1a', fontWeight: 600 }}>{progress.current} / {progress.total}</span>
+              <span className="text-[#1a1a1a] dark:text-white font-semibold">{progress.current} / {progress.total}</span>
             </div>
-            <div className="h-1.5 rounded-full" style={{ backgroundColor: '#e8e0d4' }}>
+            <div className="h-1.5 rounded-full bg-[#e8e0d4] dark:bg-stone-700">
               <div
                 className="h-1.5 rounded-full transition-all duration-300"
                 style={{ width: `${(progress.current / progress.total) * 100}%`, backgroundColor: '#e8682a' }}
@@ -65,11 +65,11 @@ function DashboardPage() {
         )}
 
         {error && (
-          <div className="rounded-2xl border px-6 py-4 mb-4 flex items-start gap-3" style={{ backgroundColor: '#fef2f2', borderColor: '#fecaca' }}>
+          <div className="rounded-2xl border px-6 py-4 mb-4 flex items-start gap-3 bg-red-50 dark:bg-red-950 border-red-200 dark:border-red-800">
             <span style={{ color: '#dc2626', fontSize: '18px' }}>⚠️</span>
             <div>
-              <p className="text-sm font-semibold" style={{ color: '#991b1b' }}>Analysis Failed</p>
-              <p className="text-sm mt-1" style={{ color: '#dc2626' }}>{error}</p>
+              <p className="text-sm font-semibold text-red-800 dark:text-red-300">Analysis Failed</p>
+              <p className="text-sm mt-1 text-red-600 dark:text-red-400">{error}</p>
             </div>
           </div>
         )}
