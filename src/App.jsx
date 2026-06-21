@@ -14,7 +14,6 @@ function App() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/showcase" element={<Showcase />} />
       </Routes>
     </BrowserRouter>
   )
