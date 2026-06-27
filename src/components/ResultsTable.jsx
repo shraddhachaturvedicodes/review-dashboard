@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { Button, Toast, Modal } from './ui'
+import { createAnalysis } from '../utils/api'
 
 function ResultsTable({ results }) {
   const [toast, setToast] = useState({ visible: false, message: '', type: 'success' })
   const [selectedReview, setSelectedReview] = useState(null)
+  const [savingIds, setSavingIds] = useState(new Set())
+  const [savedIds, setSavedIds] = useState(new Set())
 
   const showToast = (message, type = 'success') => {
     setToast({ visible: false, message: '', type })
@@ -49,6 +52,27 @@ function ResultsTable({ results }) {
     showToast('Response copied to clipboard!', 'info')
   }
 
+  const handleSave = async (r, index) => {
+    setSavingIds(prev => new Set(prev).add(index))
+    try {
+      await createAnalysis({
+        review: r.review,
+        sentiment: r.sentiment,
+        theme: r.theme,
+        response: r.response
+      })
+      setSavedIds(prev => new Set(prev).add(index))
+      showToast('Saved to history!', 'success')
+    } catch (err) {
+      showToast('Could not save — is the backend running?', 'error')
+    }
+    setSavingIds(prev => {
+      const next = new Set(prev)
+      next.delete(index)
+      return next
+    })
+  }
+
   return (
     <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-gray-200 dark:border-stone-700 overflow-hidden mb-6">
       <div className="px-6 py-4 border-b border-gray-100 dark:border-stone-700 flex items-center justify-between">
@@ -71,6 +95,7 @@ function ResultsTable({ results }) {
               <th className="px-6 py-3 text-left">Sentiment</th>
               <th className="px-6 py-3 text-left">Theme</th>
               <th className="px-6 py-3 text-left">Suggested Response</th>
+              <th className="px-6 py-3 text-left">Save</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 dark:divide-stone-700">
@@ -105,6 +130,16 @@ function ResultsTable({ results }) {
                       📋
                     </button>
                   </div>
+                </td>
+                <td className="px-6 py-4">
+                  <Button
+                    variant={savedIds.has(i) ? 'secondary' : 'outline'}
+                    size="sm"
+                    disabled={savingIds.has(i) || savedIds.has(i)}
+                    onClick={() => handleSave(r, i)}
+                  >
+                    {savedIds.has(i) ? '✓ Saved' : savingIds.has(i) ? 'Saving...' : '💾 Save'}
+                  </Button>
                 </td>
               </tr>
             ))}

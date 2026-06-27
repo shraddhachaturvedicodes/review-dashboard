@@ -11,6 +11,7 @@ function Header() {
     { label: 'Home', path: '/' },
     { label: 'Dashboard', path: '/dashboard' },
     { label: 'About', path: '/about' },
+    { label: 'History', path: '/history' },
     
   ]
 
